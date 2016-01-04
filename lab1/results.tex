@@ -1,0 +1,69 @@
+\documentclass[twoside,pl,final]{labman}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{url}
+\usepackage{listings}
+\usepackage[caption=false]{subfig}
+\usepackage{placeins}
+
+\graphicspath{ {fig/} }
+
+\subject{Projektowanie układów analogowych dla systemów VLSI}
+\title{Rozwiązanie ćwiczenia 1}
+\author{mgr inż. Jakub Kopański\\
+dr inż. Tomasz Borejko}
+
+\begin{document}
+\maketitle
+
+\appendix
+\chapter{Parametry tranzystorów}
+\label{app:devices}
+
+Tabela z parametrami tranzystorów oraz z miejscami do uzupełnienia.
+Wypełniona tabela stanowi wynik ćwiczenia,
+podpisaną należy oddać prowadzącemu.
+Należy zachować wypełnioną kopie,
+ponieważ wyniki będą potrzebne na kolejnych laboratoriach.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Parametry tranzystorów}
+  \label{tab:devices}
+  \begin{tabular}{ || c | c | c | p{0.4\textwidth} || }
+    \hline \hline
+    Parameter & nmos & pmos & Komentarz \\
+    \hline
+    Prąd polaryzacji, $I_D$ & $10~\mu{}A$                  & $10~\mu{}A$    & Wartość przybliżona                          \\ \hline
+    L                       & $1.2~\mu{}m$                 & $0.6~\mu{}m$   &                                              \\ \hline
+    WF                      & $1.86~\mu{}m$                & $4.32~\mu{}m$  & Szerokość pojedynczego \emph{palca}          \\ \hline
+    nf                      & $2$                          & $2$            & Liczba \emph{palców}                         \\ \hline
+    m                       & $2$                          & $2$            & Mnożnik równoległych tranzystorów            \\ \hline
+    WT                      & $7.44~\mu{}m$                & $17.28~\mu{}m$ & Całkowita szerokość: $WF \times nf \times m$ \\ \hline
+    $V_{DS,sat}$            & $92~mV$                      & $96~mV$        &                                              \\ \hline
+    $V_{DS}$                & $192~mV$                     & $216~mV$       & Wybrany punkt pracy                          \\ \hline
+    $V_{ov}$                & $70~mV$                      & $70~mV$        &                                              \\ \hline
+    $V_{GS}$                & $300~mV$                     & $330~mV$       &                                              \\ \hline
+    $V_{TH}$                & $230~mV$                     & $260~mV$       &                                              \\ \hline
+    $\nu_{sat}$             & $95 \times 10^3 \frac{m}{s}$ & $117 \times 10^3 \frac{m}{s}$ & Z parametrów modelu BSIM      \\ \hline
+    $t_{ox}$                & $2.73~nm$                    & $2.86~nm$      & $toxe$ z parametrów modelu BSIM              \\ \hline
+    $\epsilon_{ox}$         & $3.9$                        & $3.9$          & $epsrox$ z parametrów modelu BSIM            \\ \hline
+    $C_{ox}^\prime = \frac{\epsilon_{ox}}{t_{ox}}$
+                            & $12.64~\frac{fF}{\mu{}m}$    & $12.07~\frac{fF}{\mu{}m}$ & \\ \hline
+    $C_{ox}$                & $112.88~fF$                  & $125.12~fF$        & $C_{ox} = C_{ox}^\prime \times WT \times L$  \\ \hline
+    $C_{gs}$                & $75.25~fF$                   & $83.42~fF$         & $C_{gs} = \frac{2}{3} \times C_{ox}$         \\ \hline
+    $CGDO$                  & $290~pF$                     & $310~pF$           &                                              \\ \hline
+    $C_{gd}$                & $2.16~fF$                    & $5.36~fF$          & $C_{gd} = CGDO \times WT$                    \\ \hline
+    $g_{m}$                 & $150~\mu{}S$                 & $150~\mu{}S$       & Dla $I_D = 10~\mu{}A$                        \\ \hline
+    $r_{o}$                 & $280~k\Omega$                & $550~k\Omega$      & Dla $I_D = 10~\mu{}A$                        \\ \hline
+    $g_mr_o$                & $42~\frac{V}{V}$             & $82.5~\frac{V}{V}$ & Wzmocnienie bez obciążenia                   \\ \hline
+    $f_T$                   & $432~MHz$                    & $371~MHz$          & \\
+    \hline \hline
+  \end{tabular}
+\end{table}
+
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,bibliography}
+
+\end{document}

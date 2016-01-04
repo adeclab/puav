@@ -1,0 +1,27 @@
+.PS
+cct_init
+  linewid = linewid * 1.5
+  define(`elen_', linewid)
+  del = elen_/4
+  
+  Gnd: ground;
+  Vin: source( up_ elen_, V); llabel( -, "$V_{GS}$", +)
+  Vac: source( up_ elen_ + del, AC); llabel( -, "$v_{gs}$", +)
+  arrowline( right_ elen_); llabel(,"$i_g$",); dot
+  {Cgd: capacitor(up_   elen_ + 2 * del); rlabel(,"$C_{gd}$",)}
+  {Cgs: capacitor(down_ elen_ + 2 * del); llabel(,"$C_{gs}$",)}
+  
+  line right_ elen_ / 2
+  M1: c_fet( up_ elen_ + 4 * del, , N) with .G at Here
+  line from Cgd.end to (M1.D, Cgd.end); dot;
+  {line to M1.D}
+  move right elen_
+  {arrowline(left_ elen_); rlabel(, "$i_d$",)}
+  reversed(`source', down_ elen_, V); llabel( +, "$V_{DS}$", -)
+  ground
+  
+  line from Cgs.end to (M1.S, Cgs.end); dot
+  {line to M1.S}
+  line to (Here, Gnd); ground
+  
+.PE
