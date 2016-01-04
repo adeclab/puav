@@ -1,0 +1,349 @@
+\documentclass[twoside,pl,final]{labman}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{url}
+\usepackage{listings}
+%\usepackage[caption=false]{subfig}
+\usepackage{placeins}
+
+\graphicspath{ {fig/} }
+
+\subject{Projektowanie układów analogowych dla systemów VLSI}
+\title{Wzmacniacz operacyjny}
+\author{mgr inż. Jakub Kopański}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\clearpage
+\listoffigures
+\clearpage
+\listoftables
+\clearpage
+
+\chapter{Wstęp}
+\label{intro}
+Wzmacniacze operacyjne są jednymi z podstawowych bloków wykorzystywanych do budowania bardziej złożonych układów.
+Będąc tak powszechnymi elementami większych systemów, omówimy dokładnie ich działanie oraz zagadnienia związane z ich projetowaniem.
+Wzmacniacz operacyjny przeznaczony jest do pracy w układzie sprzężenia zwrotnego.
+Dzięki temu o parametrach układu decydują wartości elementów z których wykonano sprzężenie zwrotne,
+a nie bezwzgle parametr wzmacniacza operacyjnego.
+Takie rozwiązanie jest bardzo korzystne w realizacji scalonej ponieważ o parametrach układu można decydować stosunkiem wartości elementów sprzężenia.
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{opamp_idea}
+  \caption{Schemat poglądowy wzmacniacza operacyjnego.}
+  \label{fig:opamp:idea}
+\end{figure}
+
+Ideowy schemat wzmacniacza operacyjnego zaprezentowano na~\fig{fig:opamp:idea}
+Składa się on ze wzmacniacza różnicowego, stopnia wzmacniającego oraz bufora wyjściowego.
+Dzięki wzmacniaczowi różnicowemy mamy~2 wejścia wzmacniacza
+(do jednego będziemy podawać sygnał sprzężenia zwrotnego).
+Stopień wzmacniający zapewnia odpowiednio wysokie wzmocnienie całgo toru.
+Często przy wykorzystaniu stopnia wzmacniającego kompensuje się charakterystyke częstotliwościową wzmacniacza operacyjnego,
+o czym powiemy w dalszej części instrukcji.
+Ostatnim elementem jest bufor wyjściowy.
+Zapewnia on małą rezystancje wyjściową wzmacniacza operacyjnego,
+przez co możliwe jest obciążanie wzmacniacza \emph{małymi rezystancjami}.
+
+W układach scalonych rzadko istnieje konieczność wysterowania obciążenia rezystancyjnego.
+Typowo wzmacniacze operacyjne muszą wysterować obciążenie o charakterze pojemnościowym - bramkę tranzystora.
+W takim przypadku można zrezygnować z bufra wyjściowego.
+Tego typu wzmacniacz często nazywa się wzmacniaczem transkonduktancyjnym~\emph{OTA}
+\eng{Operational Transconductance Amplifier}.
+Rezygnując z bufora wyjściowego, należy zwrócić także uwagę na ewentualne problemy ze \emph{slew rate}
+w szczególności gdy wartość pojemności obciążająca wzmacniacz jest duża.
+Ze względu na powszechność z jaką używa się wzmacniaczy~\emph{OTA} w układach scalonych często nazywa się je wzmacniaczami operacyjnymi.
+
+\chapter{Projektowanie wzmacniacza operacyjnego}
+\label{opamp}
+
+\section{Schemat elektryczny projektowanego układu}
+\label{opamp:schematic}
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{opamp_sch}
+  \caption{Schemat elektryczny wzmacniacza operacyjnego.}
+  \label{fig:opamp:sch}
+\end{figure}
+
+Schemat układu jakim będziemy projektować zaprezentowano na~\fig{fig:opamp:sch}
+Składa się ze wzmacniacza różnicowego który steruję wzmacniaczem o wspólnym źródle.
+Wzmocnienie układu w otwartej pętli,
+dla niskich częstotliwości jest iloczynem wzmocnień poszczególnych stopni i wynosi:
+\begin{equation}
+  A_{OLDC} = A_1 \times A_2 = \overbrace{g_{mn} \cdot (r_{dsn} || r_{dsp})}^{A_1} \times \overbrace{g_{mp} \cdot r_{dsp}}^{A_2}y
+\end{equation}
+
+\subsection{Punkt pracy}
+\label{opamp:schematic:op}
+Węszły \emph{bias<3>} i~\emph{bias<4>} pochodzą z bloku projektowanego na poprzednich zajęciach.
+Pary traansystorów~\emph{M6} i~\emph{M8} tworzą źródła prądowe które wymuszają przepływ prądu w gałęziach układu.
+Przez tranzystory \emph{M1}~i~\emph{M2} płynie taki sam prąd,
+równy połowie prądu lustra złożnonego z tranzystorów~\emph{M6}.
+Bramki tranzystorów~\emph{M3} i~\emph{M4} są zwarte, więc ich napięcia~$V_{GS}$ są również takie same.
+Ponieważ prąd płynący przez oba tranzystory jest taki sam,
+napięcia~$V_{DS}$ obu tranzystorów muszą być takie same.
+Dlatego napięcie~$V_{GS}$ tranzystora~\emph{M7}, składającego się na wzmacniacz drugiego stopnia,
+jest równe napięciu~$V_{GS}$ tranzystorów~\emph{M3} i~\emph{M4}.
+Takie połączenie zapewni dobrze ustalony punkt pracy wzmacniacza.
+Dzięki temu tranzystory będą posiadały znane parametry i możliwe będzie przewidzenie osiągów projektowanego wzmacniacza operacyjnego.
+
+\subsection{Wejściowe napięcie wspólne}
+\label{opamp:schematic:cm}
+Gdy wzmacniacz operacyjny pracuję przy zamkniętej pętli sprzężenia zwrotnego,
+napięcia na wejściach pary różnicowej są utrzymywane na tych samych (lub prawie tych samych) wartościach.
+Wartość średnia z napięć na obu wejściach wzmacniacza nazywana jest napięciem wspólnym~\eng{common-mode voltage}.
+Należy zastanowić się nad maksymalnym~$V_{CMMAX}$ i minimalnym~$V_{CMMIN}$ napięciem wspólnym które zapewni,
+że tranzystory wzmacniacza różnicowego pozostaną w nasyceniu.
+
+Aby tranzystory źródła prądowego pozostały w nasyceniu niezbędne jest napięcie co najmniej~$2V_{DSsat}$.
+Stąd minimalne napięcie wspólne wynosi:
+\begin{equation}
+  V_{CMMIN} = 2V_{DSsatn} + V_{GSn}
+\end{equation}
+
+Górny limit napiecia wspólnego można obliczyć zauważając,
+że napięcie na drenie~\emph{M2} i~\emph{M1} jest równe i wynosi~$V_{DD} - V_{SGp}$.
+Dlatego możemy zapisać:
+\begin{equation}
+  V_{DS} \geq V_{GS} - V_{THn} \rightarrow V_D \geq V_G - V_{THN} \rightarrow V_{CMMAX} = V_{DD} - V_{SGp} + V_{THn}
+\end{equation}
+
+\subsection{Wejściowe napięcie różnicowe}
+\label{opamp:schematic:diff}
+Ponieważ prąd drenu tranzystors w zakresie nasycenia opisuję się równaniem:
+\begin{equation}
+  i_D = \frac{\beta_n}{2}(v_{GS} - V_{THN})
+\end{equation}
+wejściowe napięcie różnicowe można przedstawić w postacii:
+\begin{equation}
+  v_{DI} = \sqrt{\frac{2}{\beta_n}}(\sqrt{i_{D1}} - \sqrt{i_{D2}})
+  \label{eq:opamp:schematic:diff:di}
+\end{equation}
+Maksymalne wejściowe napięcie różnicowe otrzymamy podstawiając prąd źródła prądowego~$I_{SS}$ w \emph{ogonie} pary różnicowej
+za prąd~$i_{D1}$ do równania~\ref{eq:opamp:schematic:diff:di} oraz zerując prąd~$i_{D2}$.
+Otrzmamy wtedy:
+\begin{equation}
+  v_{DIMAX} = v_{I1} - v_{I2} = \sqrt{\frac{2 \cdot L \cdot I_{SS}}{KP_n \cdot W}}
+  \label{eq:opamp:schematic:diff:di:max}
+\end{equation}
+Minimalne różnicowe napięcie wejściowe otrzymujemy poprzed podstawienie prądu~$I_{SS}$ pod~$i_{D2}$ i wyzerowanie~$i_{D1}$.
+\begin{equation}
+  v_{DIMIN} = - v_{DIMAX} = - \sqrt{\frac{2 \cdot L \cdot I_{SS}}{KP_n \cdot W}}
+\end{equation}
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{opamp_di}
+  \caption{Prądy drenów w zależności od napięcia wejściowego}
+  \label{fig:opamp:schematic:diff:di}
+\end{figure}
+
+Rys.~\ref{fig:opamp:schematic:diff:di} przedstawia prądy drenu tranzystorów pary różnicowej w zależności od różnicowego napięcia wejściowego.
+
+\section{Charakterystyka częstotliwościowa wzmacniacza}
+\label{opamp:freq}
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{opamp_smallsignal}
+  \caption{Model małosygnałowy wzmacniacza operacyjnego.}
+  \label{fig:opamp:freq:smallsignal}
+\end{figure}
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{opamp_smallsignal_miller}
+  \caption{Model małosygnałowy po zastosowaniu efektu Millera.}
+  \label{fig:opamp:freq:smallsignal:miller}
+\end{figure}
+
+Aby wyznaczyć charakterystykę częstotliwościową wzmacniacza posłużymy się modelem małosygnałowym widocznym na~\fig{fig:opamp:freq:smallsignal}
+Korzystając z twierdzenia Millera można przenieść pojemność~$C_{gd}$ na węzeł~$1$ i~$2$.
+Taki zabieg spowoduję, że w układzie będą 2 stałe czasowe związane z węzłami~$1$ i~$2$.
+Schemat elektryczny odpowiadającego modelu małosygnałowego pokazany jest na~\fig{fig:opamp:freq:smallsignal:miller}
+Częstotliwości graniczne związane z tymi stałymi czasowymi będą wynosić:
+\begin{align}
+  f_1 &= \frac{1}{2 \pi (C_{gs} + C_{gd7}(1 + |A_2|)) \cdot r_{ds2} || r_{ds4}} \label{eqn:opamp:freq:pole:low} \\
+  f_2 &= \frac{1}{2 \pi (C_{gd8} + C_L + (1 + \frac{1}{|A_2|})C_{gd7}) \cdot r_{ds7} || R_{ocascn}} \label{eqn:opamp:freq:pole:high}
+\end{align}
+
+Charakterystyka częstotliwościowa układu z~\fig{fig:opamp:freq:smallsignal} ma postać:
+\begin{equation}
+  A_v(f) = \frac{\overbrace{g_{mn} \cdot (r_{dsn} || r_{dsp})}^{A_1} \times \overbrace{g_{mp} \cdot r_{dsp}}^{A_2}}{\Big(1 + j \frac{f}{f_1}\Big)\Big(1 + j \frac{f}{f_2}\Big)}
+\end{equation}
+
+\subsection{Zero w prawej płaszczyźnie}
+\label{opamp:freq:rhp}
+Niestety moddel zaproponowany w rozdziale~\ref{opamp:freq} nie jest całkowicie słuszny.
+Stosując twierdzenie Millera, do wyznaczenia częstotliwości granicznych, pomijane jest zero w charakterystyce częstotliwościowej.
+Obserwując~\fig{fig:opamp:freq:smallsignal} można zauważyć,
+że w przypadku granicznym (dla bardzo wysokoch częstotliwości) pojemność~$C_{gd}$ zwiera wejście z wyjściem drugiego stopnia wzmacniacza.
+Dlatego w celu wyznaczenia dokładniejszej charakterystyki częstotliwościowej nie możemy korzystać z twierdzenia Millera i schemtu zastępczego z~\fig{fig:opamp:freq:smallsignal:miller}
+
+W celu uproszczenia obliczeń potraktujemy węzeł~$1$ jako wejście rozważanego układu, do wyznaczenia częstotliwości zera.
+Schemat zaprezentowano na~\fig{fig:opamp:freq:rhp:schematic}
+Wartości na schemacie są równe:
+\begin{align}
+  R_o &= r_{ds7} || R_{ocascn} \\
+  C_o &= C_{gd8} + C_L
+\end{align}
+Suma prądów w węźle wyjsciowym wynosi:
+\begin{equation}
+  \frac{v_{out} - v_{in}}{1 / j \omega C_{gd7}} + \frac{v_{out}}{R_o || 1 / j \omega C_o} + g_{m2} \cdot v_{in} = 0
+\end{equation}
+Wyznaczjąc wzmocnienie układu otrzymujemy równanie:
+\begin{equation}
+  \frac{v_{out}}{v_{in}} = -g_{m2} R_o \cdot \frac{1 - j \omega \frac{C_{gd7}}{g_{m2}}}{1 + j \omega ( C_{gd7} + C_o ) R_o}
+\end{equation}
+skąd widzimy, że biegun jest taki sam jak w równaniu~\ref{eqn:opamp:freq:pole:high}.
+Natomiast w liczniku transmitancji pojawiło się zero w prawej płaszczyźnie:
+\begin{equation}
+  f_z = \frac{g_{m2}}{2 \pi C_{gd7}}
+\end{equation}
+
+Zero w po prawej stronie układu współrzędnych ma taki sam wpływ na odpowiedź amplitudową jak jak zero po lewej stronie,
+ale inny wpływ na odpowiedź fazową.
+Zero w prawej płaszczyźnie wpływa na odpowiedź fazową tak samo jak biegun w lewej płaszczyźnie.
+Ta właściwość rodzi ważne konsekwencje przy projektowaniu wzmacniaczy,
+pracujących przy sprzężeniu zwrotnym (ale nie tylko!).
+Wyjście wzmacniacza, przy dodatkowym przesunięciu fazy,
+podane jako sprzężenie zwrotne może zmienić jego charakter i zsumować się z sygnałem wejściowym
+(dodanie sprzeżenie zwrotne), powodując niestabilność wzmacniacza.
+
+\subsection{Kompensacja wzmacniacza operacyjnego}
+\label{opamp:schematic:compensation}
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{opamp_signal}
+  \caption{Schemat sygnałowy dla wzmacniacza operacyjnego}
+  \label{fig:opamp:schematic:compensation:signal}
+\end{figure}
+
+Jednym z bardziej istotnych zagadnień przy projektowaniu wzmacniacza operacyjnego jest jego kompensacja.
+\emph{Opamp} oblicza różnice pomiędzy napięciami na wejściu odwracającym i nieodwracającym
+a następnie mnoży wynik przez bardzo dużą wartość (wzmocnienie).
+Scehmat sygnałowy wzmacniacza operacyjnego przedstawia~\fig{fig:opamp:schematic:compensation:signal}
+Wzmocnienie w otwartej pętli w funcki częstotliwości oznacza się~$A_{OL}(f)$.
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{opamp_feedback}
+  \caption{Przykładowe konfiguracja wzmacniacza operacyjnego ze sprzężeniem zwrotnym.}
+  \label{fig:opamp:schematic:compensation:feedback}
+\end{figure}
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{opamp_feedback_signal}
+  \caption{Schemat przepływu sygnału dla wzmacniacza ze sprzężeniem zwrotnym.}
+  \label{fig:opamp:schematic:compensation:feedback:signal}
+\end{figure}
+
+Praktyczne zastosowania \emph{opampa} wykorzysują sprzężenie zwrotne.
+Przykładowa aplikacja (wzmacniacz nieodwracający) została pokazana na~\fig{fig:opamp:schematic:compensation:feedback}
+Analizując~\fig{fig:opamp:schematic:compensation:feedback:signal} możemy zapisać:
+\begin{equation}
+  v_{out} = A_{OL}(f) \times (v_{in} - v_{f})
+  \label{eq:opamp:schematic:compensation:vout}
+\end{equation}
+oraz
+\begin{equation}
+  v_f = v_{out} \frac{R_2}{R_1 + R_2}
+  \label{eq:opamp:schematic:compensation:vf}
+\end{equation}
+\emph{Ilość} sygnały wyjścowego jaka podawana jest z powrotem na wejście nazywana jest współczynnikiem sprzężenia~$\beta$.
+\begin{equation}
+  \beta = \frac{R_2}{R_1 + R_2}
+  \label{eq:opamp:schematic:compensation:beta}
+\end{equation}
+Podstawiając równania~\ref{eq:opamp:schematic:compensation:vf} i~\ref{eq:opamp:schematic:compensation:beta}
+do równania~\ref{eq:opamp:schematic:compensation:vout} i wyznaczając wzmocnienie w układzie zamkniętej pętli
+otrzymujemy:
+\begin{equation}
+  A_{CL}(f) = \frac{v_{out}}{v_{in}}
+  \label{eq:opamp:schematic:compensation:acl}
+\end{equation}
+Jeżeli wzmocnienie otwartej pętli jest bardzo duże~$A_{OL}(f) \rightarrow \infty$,
+to wzmocnienie zamkniętej pętli w prezebtowanym układzie wzmacniacza nieodwracającego wynosi:
+\begin{equation}
+  A_{CL}(f) \rightarrow \frac{1}{\beta} = 1 + \frac{R_1}{R_2}
+  \label{eq:opamp:schematic:compensation:acl:beta}
+\end{equation}
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{opamp_follower}
+  \caption{Wtórnik na wzmacniaczu operacyjnym.}
+  \label{fig:opamp:schematic:compensation:follower}
+\end{figure}
+
+Należy zwrócić uwagę, że gdy w równaniu~\ref{eq:opamp:schematic:compensation:acl}
+czynnik~$\beta \cdot A_{OL}(f) = -1$ to wzmocnienie rośnie do nieskończoności.
+Dokładniej ujmując, muszą być spełnione warunki:
+\begin{equation}
+  | \beta \cdot A_{OL}(f) | = 1
+  \label{eq:opamp:schematic:compensation:gen:amp} \\
+  \measuredangle \beta \cdot A_{OL}(f) = \pm 180^\circ
+  \label{eq:opamp:schematic:compensation:gen:phase}
+\end{equation}
+Wzmocnienie zamkniętej pętli rosnące do nieskończoności oznacza,
+że wzmacniacz jest niestabilny.
+Najgorszy efekt (najłatwiej o niestabilny wzmacniacz) jest w przypadku dużych wartości współczynnika~$\beta$.
+Taka sytuacja będzie miała miejsce gdy cały sygnał wyjściowy zostanie podany jako sygnał sprzężenia
+(zakładając, że w torze sprzężenia zwrotnego nie ma transformatorów czy wzmacniaczy).
+W przypadku wzmacniacza operacyjnego taka sytuacja ma miejsce w przypadku konfiguracji wtórnika,
+widocznej na~\fig{eq:opamp:schematic:compensation:follower}
+W celu zbadania stabilności wzmacniacza operacyjnego należy sprawdzić wzmocnienie otwartej pętli,
+pry współczynniki sprzężenie równym~$1$, to znaczy:
+\begin{equation}
+  | A_{OL}(f) | = 1
+  \label{eq:opamp:schematic:compensation:condition:amp} \\
+  \measuredangle A_{OL}(f) = 180^\circ
+  \label{eq:opamp:schematic:compensation:condition:phase}
+\end{equation}
+
+Warto zauważyć, że im większe wzmocnienie w zamkniętej pętli,
+tym mniejsza wartość współczynnika sprzężenia~$\beta$,
+tym bardziej stabilny będzie układ wzmacniacza operacyjnego ze sprzężeniem zwrotnym.
+Sprżeżenie zwrotne sprawia, że układ staję się mniej (prawie w ogóle) wrażliwy na wahania
+wzmocnienia \emph{opampa} w otwartej pętli~$A_{OL}$.
+Odbywa się to kosztem stabilności.
+
+W celu oszacowania chrakterystyki częstotliwościowej wzmacniacza,
+posłużymy się modelem z~\fig{fig:opamp:schematic:compensation:model}
+Z kolei na~\fig{fig:opamp:schematic:compensation:nodes} zaznaczono węzły które odpowiadają odpowiednim węzłom modelu.
+Bazując na schemacie eleketrycznym \emph{opampa} możemy zapisać:
+\begin{align}
+  R_1 &= r_{dsn} || r_{dsp} \nonumber \\
+  R_2 &= r_{dsp} || R_{ocasn} \nonumber \\
+  g_{m1} &= g_{mn} \nonumber \\
+  g_{m2} &= g_{mp} \nonumber \\
+  C_1 &= C_{ds4} + C_{gd2} + C_{gs7} \nonumber \\
+  C_2 &= C_L + C_{gd8} \approx C_L \nonumber
+\end{align}
+
+Biegun związany z węzłem~$1$ jest na częstotliwości równej
+\begin{equation}
+  f_1 \approx \frac{1}{2 \pi [(C_c + C_2) \cdot R_2 + (C_1 + C_c(1 + g_{m2}R_2)) \ cdot R_1]}
+\end{equation}
+co dla dużych wartości~$g_{m2}R_2$ można przybliżyć:
+\begin{equation}
+  f_1 \approx \frac{1}{2 \pi g_{m2}R_2R_1C_c}
+\end{equation}
+Biegun pochodzący od węzła wyjściowego znajduję się na częstotliwości:
+\begin{equation}
+  f_2 = \frac{g_{m2}C_c}{2 \pi (C_cC_1 + C_1C_2 + C_cC_2)}
+\end{equation}
+Zero transmitancji położone jest na częstotliwości:
+\begin{equation}
+  f_z = \frac{g_{m2}}{2 \pi \cdot C_c}
+\end{equation}
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,bibliography}
+
+\end{document}
