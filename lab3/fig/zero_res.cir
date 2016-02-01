@@ -1,0 +1,9 @@
+.PS
+cct_init
+
+"Wejście" above; line right dimen_/2;
+resistor(right dimen_); "$R_z$" above rjust
+capacitor(right dimen_); "$C_c$" above rjust
+line right dimen_/2 "Wejście" above ljust;
+
+.PE

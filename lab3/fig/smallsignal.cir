@@ -1,0 +1,43 @@
+.PS
+cct_init
+
+hi = dimen_*3/2
+
+define(`smallsig1', `[
+G: gap(up_ hi,1,A); rlabel(,"$v_{in}$")
+  line right dimen_/2 from G.end
+  {
+    In: G.end
+  }
+  line right dimen_ from G.start
+Gm: source(up_ hi,Q) b_current(i_d,below_,O,,0.2); rlabel(,"$g_mv_{in}$")
+  line right dimen_*3/2 from Gm.start
+Res: resistor(up_ hi,,E); rlabel(,"$R_s$")
+  line right dimen_ from Res.start
+Cap: capacitor(up_ hi); rlabel(,"$C_s$")
+  line from Gm.end to Res.end; dot; {circlerad=0.07; circle at Here+(0,0.13) "1"}
+  line from Res.end to Cap.end
+]')
+
+define(`smallsig2', `[
+G: gap(up_ hi,1,A); rlabel(,"$v_{s}$")
+  line right dimen_/2 from G.end
+  {
+    In: G.end
+  }
+  line right dimen_ from G.start
+Gm: source(up_ hi,Q) b_current(i_d,below_,O,,0.2); rlabel(,"$g_mv_{s}$")
+  line right dimen_*3/2 from Gm.start
+Res: resistor(up_ hi,,E); rlabel(,"$R_o$")
+  line right dimen_ from Res.start
+Cap: capacitor(up_ hi); rlabel(,"$C_o$")
+  line from Gm.end to Res.end; dot; {circlerad=0.07; circle at Here+(0,0.13) "2"}
+  line from Res.end to Cap.end "$v_{out}$" above ljust
+]')
+
+St1: smallsig1
+line right dimen_ from St1.Cap.end
+St2: smallsig2 with .In at Here
+line from St1.Cap.start to St2.G.start
+capacitor(from St2.G.n to St2.Gm.n); "$C_{gd7}$" at Here+(0,0.1) above rjust
+.PE

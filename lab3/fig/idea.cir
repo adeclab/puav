@@ -1,0 +1,19 @@
+.PS
+cct_init
+
+D: opamp "$A_1$" rjust
+line right_ dimen_ /2
+G: amp "$A_2$" rjust
+dot; line up_ dimen_; capacitor(left_ to (G.l,Here)); rlabel(,"$C_c$"); line down_ dimen_; dot
+line right_ dimen_ / 2 from G.r
+B: amp(right_) "$\times 1$" rjust
+line right_ dimen_/2 from B.r; dot; llabel(,"$Out$")
+{
+  line left_ dimen_/2 from D.In1; dot; rlabel(,"$In -$")
+  line left_ dimen_/2 from D.In2; dot; rlabel(,"$In +$")
+}
+{"Wzmacniacz" "różnicowy" at D.s-(0.2,0.2) below}
+{"Stopień" "wzmacniajacy" at D.s-(-1.8*dimen_,0.2)}
+{"Bufor" "wyjściowy" at D.s-(-3.8*dimen_,0.2)}
+
+.PE

@@ -1,0 +1,71 @@
+.PS
+cct_init
+
+del = dimen_ / 3
+
+define(`diffpair', `[
+M1: c_fet(up_ dimen_,,,)
+  line left dimen_*2/3 from M1.G
+Inn: dot; llabel(,"$In-$")
+  line right dimen_ * 2 from M1.S
+  {dot(at last line.c); Tail: Here}
+M2: c_fet(up_ dimen_,R,) with .S at Here
+  line down dimen_ from M2.G
+  line to (Inn,Here)
+Inp: dot; llabel("$In+$")
+
+]')
+
+define(`nsrc',`[
+M6B: c_fet(up_ dimen_,,,)
+  ground(at M6B.S)
+M6T: c_fet(up_ dimen_,,,) with .S at M6B.D
+]')
+
+define(`load',`[
+M3: c_fet(down_ dimen_,,P,)
+  ground(at M3.S,T,E)
+  move from M3.D right dimen_ * 2
+M4: c_fet(down_ dimen_,R,P,) with .D at Here
+  ground(at M4.S,T,E)
+  line from M3.G to M4.G
+  dot(at last line.c)
+  line down to (Here,M3.D) then to M3.D
+]')
+
+P1: diffpair
+line down dimen_ from P1.Tail
+Tail: nsrc with .M6T.D at Here
+line from Tail.M6B.G to (P1.Inp,Tail.M6B.G)
+B4: dot; llabel(,"$bias<4>$")
+line from Tail.M6T.G to (P1.Inp,Tail.M6T.G)
+B3: dot; llabel(,"$bias<3>$")
+line up_ dimen_/2 from P1.M2.D
+Out: dot
+L: load with .M4.D at Out
+line from P1.M1.D to L.M3.D
+line right dimen_*2 from Out
+M7: c_fet(down_ dimen_,R,P,) with .G at Here
+L2: nsrc with .M6T.D at (M7.D,Tail.M6T.D)
+line from L2.M6T.D to M7.D
+Out2: dot(at last line .c)
+capacitor(left_ dimen_); rlabel(,"$C_c$")
+line up_ to (Here,M7.G); dot
+line from L2.M6T.G to B3
+line from L2.M6B.G to B4
+line from M7.S to (M7.S,L.M4.S)
+ground(,T,E)
+arrow right from Out2 "$Out$" above ljust
+{
+  "$M_1$" at P1.M1.e ljust
+  "$M_2$" at P1.M2.w rjust
+  "$M_3$" at L.M3.w rjust
+  "$M_4$" at L.M4.e ljust
+  "$M_7$" at M7.e ljust
+  "$M_{6T}$" at Tail.M6T.e ljust above
+  "$M_{6B}$" at Tail.M6B.e ljust above
+  "$M_{8T}$" at L2.M6T.e ljust above
+  "$M_{8B}$" at L2.M6B.e ljust above
+}
+
+.PE

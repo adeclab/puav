@@ -1,0 +1,38 @@
+.PS
+cct_init
+
+
+define(`smallsig', `[
+In: Here;
+  gap(down_ dimen_*3/2, 1)
+  line right dimen_/2
+S: Here;
+Vin: gap(up_ dimen_*3/2,,A)
+Ip: line left dimen_/2
+  move right dimen_*2
+Gm: source(down_ dimen_*3/2,G) b_current(i_d)
+  {line left dimen_ to S}
+  line right dimen_*3/2
+Res: resistor(up_ dimen_*3/2,,E)
+  {line to Gm.n}; dot
+  line right dimen_*3/2
+Cap: capacitor(down_ dimen_*3/2)
+  line to Res.s
+]')
+St1: smallsig
+St2: smallsig
+line from St1.Cap.n to St2.In
+line from St1.Cap.s to St2.S
+{
+  "In" at St1.In rjust
+  "$v_{in}$" at St1.Vin rjust
+  "$g_{m1} v_{in}$" at St1.Gm-(0.1,0) rjust
+  "$R_s$" at St1.Res-(0.05,0) rjust
+  "$C_s+C_{MI}$" at St1.Cap-(0.05,0) rjust
+  "$v_{s}$" at St2.Vin ljust
+  "$g_{m2} v_{s}$" at St2.Gm+(0.1,0) ljust
+  "$R_o$" at St2.Res+(0.05,0) ljust
+  "$C_o + C_{MO}$" at St2.Cap+(0.05,0) ljust
+}
+
+.PE

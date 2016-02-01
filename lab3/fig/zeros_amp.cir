@@ -1,0 +1,12 @@
+.PS
+cct_init
+
+"Wejście" above; line right dimen_/2;
+capacitor(right dimen_); "$C_c$" above rjust
+{
+  move right dimen_
+  amp(left_,dimen_) "$\times 1$" ljust
+}
+move right dimen_
+line right dimen_ "Wejście" above ljust;
+.PE
