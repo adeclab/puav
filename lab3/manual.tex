@@ -49,7 +49,7 @@ Ideowy schemat wzmacniacza operacyjnego
 zaprezentowano na~\fig{fig:idea}
 Składa się on ze wzmacniacza różnicowego,
 stopnia wzmacniającego oraz bufora wyjściowego.
-Dzięki wzmacniaczowi różnicowemy mamy~2 wejścia wzmacniacza
+Dzięki wzmacniaczowi różnicowemu mamy~2 wejścia wzmacniacza
 (do jednego będziemy podawać sygnał sprzężenia zwrotnego).
 Stopień wzmacniający zapewnia odpowiednio wysokie
 wzmocnienie całego toru oraz dzięki kondensatorowi~$C_c$
@@ -116,7 +116,7 @@ będzie przewidzenie osiągów projektowanego wzmacniacza operacyjnego.
 
 \subsection{Wejściowe napięcie wspólne}
 \label{schematic:cm}
-Gdy wzmacniacz operacyjny pracuję przy
+Gdy wzmacniacz operacyjny pracuje przy
 zamkniętej pętli sprzężenia zwrotnego,
 napięcia na wejściach pary różnicowej są utrzymywane na tych samych
 (lub prawie tych samych) wartościach.
@@ -244,9 +244,9 @@ jako wejście rozważanego układu, do wyznaczenia częstotliwości zera.
 Schemat zaprezentowano na~\fig{fig:smallsignal}
 Suma prądów w węźle wyjściowym wynosi:
 \begin{equation}
-  \frac{v_{out} - v_{in}}{1 / j \omega C_{gd7}} +
+  \frac{v_{out} - v_s}{1 / j \omega C_{gd7}} +
   \frac{v_{out}}{R_o || 1 / j \omega C_o} +
-  g_{m2} \cdot v_{in} = 0
+  g_{m2} \cdot v_s = 0
 \end{equation}
 Wyznaczając wzmocnienie układu otrzymujemy równanie:
 \begin{equation}
@@ -307,7 +307,7 @@ co pozwala wyznaczyć:
 Podstawiając~(\ref{eqn:freq:split:vs}) do~(\ref{eqn:freq:split:vs})
 możemy wyznaczyć wzmocnienie układu:
 \begin{align}
-  \frac{v_{out}}{v_{in}} &= \nonumber \\
+  \frac{v_{out}}{v_{in}} = \nonumber \\
   \frac{g_{m1} g_{m2} R_o R_s (1 - s \frac{C_{gd7}}{g_{m2}})}
     {s^2 R_o R_s (C_{gd7} C_o + C_{gd7} C_s + C_o C_s) +
     s[R_o (C_{gd7} + C_o) + R_s (C_{gd7} + C_s) + g_{m2} R_o R_s C_{gd7}] + 1}.
