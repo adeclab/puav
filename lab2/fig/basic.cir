@@ -1,0 +1,34 @@
+.PS
+cct_init
+
+del = dimen_ / 3
+
+
+define(`nmirror',`[
+M1: c_fet(up_ dimen_,R,,)
+M2: c_fet(up_ dimen_,,,) with .G at M1.G + (dimen_,0)
+  line from M1.G to M2.G
+  dot(at last line.c)
+  line up_ dimen_; line left_ to (M1.D,Here); dot
+  line up_ dimen_ from M1.D
+REF: Here
+  line up_ dimen_ from M2.D
+OUT: Here
+]')
+
+SRC: nmirror
+resistor(up_ dimen_ from SRC.REF) b_current(I_{REF},,O,,0.01); rlabel(,"$R$")
+ground(,T,E)
+resistor(up_ dimen_ from SRC.OUT) b_current(I_{OUT},,O,,0.01); rlabel(,"$R$")
+ground(,T,E)
+
+ground(at SRC.M1.S)
+ground(at SRC.M2.S)
+{
+  spline -> from SRC.M2.S-(0.05,0.1) up dimen_/4 left dimen_/2 then to SRC.M2.G-(0.05,0.03); "$V_{GS}$" below rjust
+  spline -> from SRC.M1.S-(-0.05,0.1) up dimen_/4 right dimen_/2 then to SRC.M1.G-(-0.05,0.03)
+  "$M_1$" at SRC.M1.w rjust
+  "$M_2$" at SRC.M2.e ljust
+}
+
+.PE

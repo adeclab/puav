@@ -1,0 +1,42 @@
+.PS
+cct_init
+ifdef(`NAND_gate',,`include(HOMELIB_`'liblog.m4)')
+log_init
+
+dim = 0.75
+
+define( `mirror',`[
+  down_; arrowline; rlabel( , "$I_{REF}$")
+  DC: Here
+  dot
+  M3: c_fet( up_ dim, R,,) with .D at Here; llabel( , "$M_3$")
+  DM: M3.S
+  M1: c_fet( up_ dim, R,,) with .D at DM; llabel( , "$M_1$")
+  move to DM; dot
+  line from M1.G right_ dim/6; GM: Here; dot;
+  line right_ dim/6;
+  M2: c_fet( up_ dim,,,) with .G at Here; rlabel( , "$M_2$");
+  ground(at M1.S)
+  ground(at M2.S)
+  line from GM to ( GM, DM)
+  line to DM
+  M4: c_fet( up_ dim,,,) with .S at M2.D; rlabel( , "$M_4$")
+  move to (M4.D, DC); reversed( `arrowline',up_ dim); rlabel( , "$I_O$")
+  line from M3.G to M4.G
+  GC: last line.c
+  move to GC; dot
+  line from GC to ( GC, DC)
+  line to DC
+]')
+
+M: mirror
+arrow <- from M.M3.D left dim/2 up dim/6
+  "$2V_{GS} = 2(V_{DSsat} + V_{TH})$" above rjust
+arrow <- from M.M1.D left dim/2 up dim/6
+  "$V_{GS} = V_{DSsat} + V_{TH}$" above rjust
+arrow <- from M.M4.D right dim/2 up dim/6
+  "$\geq 2V_{DSsat} + V_{TH}$" above ljust
+arrow <- from M.M2.D right dim/2 up dim/6
+  "$V_{GS} = V_{DSsat} + V_{TH}$" above ljust
+
+.PE

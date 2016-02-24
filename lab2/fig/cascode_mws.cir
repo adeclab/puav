@@ -1,0 +1,37 @@
+.PS
+cct_init
+ifdef(`NAND_gate',,`include(HOMELIB_`'liblog.m4)')
+log_init
+
+dim = 0.75
+
+define( `mws',`[
+  line down_ dim/2;
+  D: Here; dot
+  M1: c_fet( up_ dim,,,)with .D at Here;
+  M2: c_fet( up_ dim,,,) with .D at M1.S;
+  M3: c_fet( up_ dim,,,) with .D at M2.S;
+  M4: c_fet( up_ dim,,,) with .D at M3.S;
+
+  move to M4.G;
+  line from Here to (Here,D) then to D
+  move to M3.G; dot
+  move to M2.G; dot
+  move to M1.G; dot
+  
+  C: M3.G
+]')
+
+line down_ dim/2
+DM: Here; dot
+M:  c_fet( up_ dim,,,)with .D at Here; rlabel( , "$M_{WS}$");
+move to M.G
+{line from Here to (Here,DM) then to DM}
+
+move right_ dim*3/2
+"$\equiv$" ljust
+move right_ dim
+MWS: mws
+
+
+.PE

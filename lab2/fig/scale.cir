@@ -1,0 +1,27 @@
+.PS
+cct_init
+
+ground()
+resistor(up_ dimen_); rlabel(,"$R$");
+move up_ dimen_/2
+{arrowline(down_ dimen_/2); rlabel(,"$I_{REF} = 20~\mu{}A$")}
+M1: c_fet(down_ dimen_,, P,) with .D at Here
+line from M1.G down to (M1.G,M1.D) then to M1.D; dot; dot(at M1.G)
+line from M1.G right dimen_/2
+{
+M2: c_fet(down_ dimen_,R,P,) with .G at Here
+  arrowline(down_ dimen_/2 from M2.D); rlabel(,"$60~\mu{}A$")
+}
+line right dimen_*2
+M3: c_fet(down_ dimen_,R,P,) with .G at Here
+  arrowline(down_ dimen_/2 from M3.D); rlabel(,"$10~\mu{}A$")
+{
+  "$\frac{30~\mu{}m}{2~\mu{}m}$" at M1.w rjust
+  "$\frac{90~\mu{}m}{2~\mu{}m}$" at M2.e ljust above
+  "$\frac{15~\mu{}m}{2~\mu{}m}$" at M3.e ljust above
+}
+ground(at M1.S,T,E)
+ground(at M2.S,T,E)
+ground(at M3.S,T,E)
+
+.PE

@@ -1,0 +1,37 @@
+.PS
+cct_init
+ifdef(`NAND_gate',,`include(HOMELIB_`'liblog.m4)')
+log_init
+
+dim = 0.75
+
+define( `mirror',`[
+  {
+    move left_ dim
+    down_; arrowline; rlabel( , "$I_{REF}$")
+    DS: Here; dot
+    MWS: c_fet( up_ dim, R,,) with .D at Here; llabel( , "$M_{WS}$")
+    line from MWS.G right_ dim/6; dot
+    line up_ to (Here, DS) then to DS
+    move to MWS.S
+    ground()
+  }
+  down_; arrowline; rlabel(, "$I_{REF}$"); line dim
+  DM: Here
+  M1: c_fet( up_ dim, R,,) with .D at DM; llabel( , "$M_1$")
+  move to DM; dot
+  line from M1.G right_ dim/6; GM: Here; dot;
+  line right_ dim/6;
+  M2: c_fet( up_ dim,,,) with .G at Here; rlabel( , "$M_2$");
+  ground(at M1.S)
+  ground(at M2.S)
+  line from GM to ( GM, DM)
+  line to DM
+  M4: c_fet( up_ dim,,,) with .S at M2.D; rlabel( , "$M_4$")
+  move to M4.D; reversed( `arrowline',up_ dim); rlabel( , "$I_O$")
+  line from MWS.G to M4.G
+]')
+
+M: mirror
+
+.PE

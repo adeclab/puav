@@ -1,0 +1,76 @@
+.PS
+cct_init
+ifdef(`NAND_gate',,`include(HOMELIB_`'liblog.m4)')
+log_init
+
+dim = 0.75
+
+define( `nwsc',`[
+  {
+    move left_ dim
+    I1: line down_ dim/2
+    DS: Here; dot
+    MWS: c_fet( up_ dim, R,,) with .D at Here; "$M_{WSN}$" at MWS.S rjust above
+    line from MWS.G right_ dim/6; dot
+    line up_ to (Here, DS) then to DS
+    move to MWS.S
+    ground
+  }
+  I2: line down_ dim/2;
+  DM: Here
+  M3: c_fet( up_ dim, R,,) with .D at Here;
+  M1: c_fet( up_ dim, R,,) with .D at M3.S;
+  move to DM; dot
+  line from M1.G right_ dim/6; GM: Here; dot; line right_ dim/6;
+  M2: c_fet( up_ dim,,,) with .G at Here;
+  {move to M2.S; ground}
+  {move to M1.S; ground}
+  line from GM to ( GM, DM)
+  line to DM
+  M4: c_fet( up_ dim,,,) with .S at M2.D;
+  I3: M4.D
+  line from MWS.G to M4.G
+]')
+
+define( `pwsc',`[
+  {
+    move left_ dim
+    I1: line up_ dim/2
+    DS: Here; dot
+    MWS: c_fet( down_ dim,, P) with .D at Here; rlabel(, "$M_{WSP}$")
+    line from MWS.G right_ dim/6; dot
+    line down_ to (Here, DS) then to DS
+    move to MWS.S
+  }
+  I2: line up_ dim/2;
+  DM: Here
+  M3: c_fet( down_ dim,, P) with .D at Here;
+  M1: c_fet( down_ dim,, P) with .D at M3.S;
+  move to DM; dot
+  line from M1.G right_ dim/6; GM: dot at Here;
+  line from GM to (GM, DM) then to DM
+  I3: Here
+  move to MWS.S; ground(,up_,E)
+  move to M1.S; ground(,up_,E)
+]')
+
+NWS: nwsc
+PWS: pwsc with .I1 at NWS.I3
+M5: c_fet( up_ dim, , ,) with .e at (PWS.M1.w,NWS.M4)
+M6: c_fet( up_ dim, , ,) with .e at (PWS.M1.w,NWS.M2)
+ground(at M6.S)
+{
+  END: move right dim*3
+}
+
+move up dim from NWS.I1
+arrowline(down dim); llabel(,"$I_{REF}$")
+move up dim from NWS.I2
+arrowline(down dim); llabel(,"$I_{REF}$")
+
+arrow from PWS.M1.G to (END, PWS.M1.G); "$bias<1>$" above rjust
+arrow from PWS.MWS.G to (END, PWS.MWS.G); "$bias<2>$" above rjust
+arrow from NWS.M3.G to (END, NWS.M3.G); "$bias<3>$" above rjust
+arrow from NWS.M1.G to (END, NWS.M1.G); "$bias<4>$" above rjust
+
+.PE
