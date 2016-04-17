@@ -8,7 +8,7 @@
 \usepackage{placeins}
 \usepackage{subfig}
 
-\graphicspath{ {fig/} }
+\graphicspath{{fig/}}
 
 \subject{Projektowanie układów analogowych dla systemów VLSI}
 \title{Wzmacniacz operacyjny}
@@ -32,11 +32,11 @@ zagadnienia związane z ich projektowaniem.
 Wzmacniacz operacyjny przeznaczony jest do
 pracy w układzie sprzężenia zwrotnego.
 Dzięki temu o parametrach układu decydują
-wartości elementów z których wykonano sprzężenie zwrotne,
+wartości elementów, z których wykonano sprzężenie zwrotne,
 a nie bezwzględne parametry wzmacniacza operacyjnego.
-Takie rozwiązanie jest bardzo korzystne w realizacji scalonej
-ponieważ o parametrach układu można decydować
-stosunkiem wartości elementów sprzężenia.
+Takie rozwiązanie jest bardzo korzystne w realizacji scalonej,
+ponieważ parametry układu można ustalać poprzez zmianę
+stosunku wartości elementów sprzężenia.
 
 \begin{figure}[!htbp]
   \centering
@@ -48,11 +48,13 @@ stosunkiem wartości elementów sprzężenia.
 Ideowy schemat wzmacniacza operacyjnego
 zaprezentowano na~\fig{fig:idea}
 Składa się on ze wzmacniacza różnicowego,
-stopnia wzmacniającego oraz bufora wyjściowego.
-Dzięki wzmacniaczowi różnicowemu mamy~2 wejścia wzmacniacza
-(do jednego będziemy podawać sygnał sprzężenia zwrotnego).
+stopnia wzmacniającego, kondensatora oraz buforu wyjściowego.
+Dzięki wzmacniaczowi różnicowemu mamy~2 wejścia.
+Do jednego będziemy podawać sygnał wejściowy,
+a do drugiego sygnał sprzężenia zwrotnego.
 Stopień wzmacniający zapewnia odpowiednio wysokie
-wzmocnienie całego toru oraz dzięki kondensatorowi~$C_c$
+wzmocnienie całego toru.
+Kondensator~$C_c$ natomiast
 kształtuje charakterystykę częstotliwościową wzmacniacza,
 co będzie szerzej opisane w dalszej części instrukcji.
 Ostatnim elementem jest bufor wyjściowy.
@@ -65,11 +67,11 @@ o charakterze pojemnościowym - bramkę tranzystora.
 W takim przypadku można zrezygnować z bufora wyjściowego.
 Tego typu wzmacniacz często nazywa się wzmacniaczem
 transkonduktancyjnym~\emph{OTA} \eng{Operational Transconductance Amplifier}.
-Rezygnując z bufora wyjściowego, należy zwrócić także uwagę na
-ewentualne problemy ze \emph{slew rate} w szczególności gdy wartość
+Rezygnując z bufora wyjściowego, należy zwrócić uwagę na
+ewentualne problemy ze \emph{slew rate}, w szczególności gdy wartość
 pojemności obciążająca wzmacniacz jest duża.
-Ze względu na powszechność z jaką używa się wzmacniaczy~\emph{OTA}
-w układach scalonych często nazywa się je wzmacniaczami operacyjnymi.
+Ze względu na powszechność, z jaką używa się wzmacniaczy~\emph{OTA},
+w układach scalonych często nazywa się je w skrócie wzmacniaczami operacyjnymi.
 
 \chapter{Projektowanie wzmacniacza operacyjnego}
 \label{opamp}
@@ -83,11 +85,11 @@ w układach scalonych często nazywa się je wzmacniaczami operacyjnymi.
   \label{fig:schematic}
 \end{figure}
 
-Schemat układu jaki będziemy projektować
-na zajęciach zaprezentowano na~\fig{fig:schematic}
-Składa się ze wzmacniacza różnicowego który steruję
+Schemat układu, jaki będziemy projektować
+na zajęciach, zaprezentowano na~\fig{fig:schematic}
+Składa się on ze wzmacniacza różnicowego, który steruje
 wzmacniaczem o wspólnym źródle.
-Wzmocnienie układu w otwartej pętli, dla niskich częstotliwości
+Wzmocnienie układu w otwartej pętli dla niskich częstotliwości
 jest iloczynem wzmocnień poszczególnych stopni i wynosi:
 \begin{equation}
   A_{OLDC} = A_1 \times A_2 =
@@ -101,8 +103,8 @@ Węzły \emph{bias<3>} i~\emph{bias<4>} pochodzą z bloku
 projektowanego na poprzednich zajęciach.
 Pary tranzystorów~$M_6$ i~$M_8$ tworzą źródła prądowe,
 które wymuszają przepływ prądu w poszczególnych gałęziach układu.
-Przez tranzystory $M_1$~i~$M_2$ płynie taki sam prąd,
-równy połowie prądu lustra złożnonego z tranzystorów~$M_6$.
+Prądy płynące przez tranzystory $M_1$~i~$M_2$ są takie same,
+równe połowie prądu lustra złożonego z tranzystorów~$M_6$.
 Bramki tranzystorów~$M_3$ i~$M_4$ są zwarte,
 więc ich napięcia~$V_{GS}$ są takie same.
 Ponieważ prąd płynący przez oba tranzystory jest taki sam,
@@ -119,23 +121,23 @@ będzie przewidzenie osiągów projektowanego wzmacniacza operacyjnego.
 Gdy wzmacniacz operacyjny pracuje przy
 zamkniętej pętli sprzężenia zwrotnego,
 napięcia na wejściach pary różnicowej są utrzymywane na tych samych
-(lub prawie tych samych) wartościach.
+(lub prawie tych samych) poziomach.
 Wartość średnia z napięć na obu wejściach wzmacniacza
 nazywana jest napięciem wspólnym~\eng{common-mode voltage}.
 Należy zastanowić się nad maksymalnym~$V_{CM_{max}}$ i
-minimalnym~$V_{CM_{min}}$ napięciem wspólnym które zapewni,
+minimalnym~$V_{CM_{min}}$ napięciem wspólnym, które zapewni,
 że tranzystory wzmacniacza różnicowego pozostaną w nasyceniu.
 
 Aby tranzystory źródła prądowego pozostały w nasyceniu
-niezbędne jest napięcie co najmniej~$2V_{DSsat}$.
+wartość niezbędnego napięcia wynosi~$2V_{DSsat}$.
 Stąd minimalne napięcie wspólne wynosi:
 \begin{equation}
   V_{CM_{min}} = 2V_{DSsatn} + V_{GSn}
 \end{equation}
 
 Górny limit napięcia wspólnego można obliczyć zauważając,
-że napięcie na drenie~$M_2$ i~$M_1$ jest równe i wynosi~$V_{DD} - V_{SGp}$.
-Dlatego możemy zapisać:
+że napięcia na drenach tranzystorów~$M_2$ i~$M_1$ są równe i wynoszą~$V_{DD} - V_{SGp}$,
+dlatego możemy zapisać:
 \begin{equation}
   V_{DS} \geq V_{GS} - V_{THn} \rightarrow
   V_D \geq V_G - V_{THN} \rightarrow
@@ -155,7 +157,7 @@ wejściowe napięcie różnicowe można przedstawić w postaci:
 \end{equation}
 Maksymalne wejściowe napięcie różnicowe otrzymamy podstawiając prąd źródła
 prądowego~$I_{SS}$ płynącego w \emph{ogonie} pary różnicowej
-za prąd~$i_{D1}$ do~(\ref{eqn:schematic:diff:di}) oraz zerując prąd~$i_{D2}$.
+pod prąd~$i_{D1}$ do~(\ref{eqn:schematic:diff:di}) oraz zerując prąd~$i_{D2}$.
 Otrzymamy wtedy:
 \begin{equation}
   v_{DI_{max}} =
@@ -199,7 +201,7 @@ Wartości nowych pojemności wynoszą:
   C_{MI} &= C_{gd7}(1 + |A_2|)), \\
   C_{MO} &= C_{gd7}(1 + \frac{1}{|A_2|}). \\
 \end{align}
-Taki zabieg spowoduję, że w układzie będą
+Taki zabieg spowoduje, że w układzie będą
 2 stałe czasowe związane z węzłami~$1$ i~$2$.
 Schemat elektryczny odpowiadającego modelu
 małosygnałowego pokazany jest na~\fig{fig:miller}
@@ -230,17 +232,17 @@ Charakterystyka częstotliwościowa układu z~\fig{fig:miller} ma postać:
 \label{freq:rhp}
 Niestety model zaproponowany w rozdziale~\ref{freq}
 nie jest całkowicie poprawny.
-Stosując twierdzenie Millera, do wyznaczenia częstotliwości granicznych,
+Stosując twierdzenie Millera do wyznaczenia częstotliwości granicznych
 pomijane jest zero w charakterystyce częstotliwościowej.
 Obserwując~\fig{fig:smallsignal} można zauważyć,
 że w przypadku granicznym (dla bardzo wysokich częstotliwości)
 pojemność~$C_{gd7}$ zwiera wejście z wyjściem drugiego stopnia wzmacniacza.
-Dlatego w celu wyznaczenia dokładniejszej charakterystyki częstotliwościowej
+Aby wyznaczyć dokładniejszą charakterystykę częstotliwościową
 nie możemy korzystać z twierdzenia Millera
 oraz schematu zastępczego z~\fig{fig:miller}
 
 W celu uproszczenia obliczeń potraktujemy węzeł~$1$
-jako wejście rozważanego układu, do wyznaczenia częstotliwości zera.
+jako wejście rozważanego układu do wyznaczenia częstotliwości zera.
 Schemat zaprezentowano na~\fig{fig:smallsignal}
 Suma prądów w węźle wyjściowym wynosi:
 \begin{equation}
@@ -269,7 +271,7 @@ ale inny wpływ na odpowiedź fazową.
 Zero w prawej płaszczyźnie wpływa na odpowiedź fazową
 tak samo jak biegun w lewej płaszczyźnie.
 Ta właściwość rodzi ważne konsekwencje przy projektowaniu wzmacniaczy,
-pracujących przy sprzężeniu zwrotnym (ale nie tylko!).
+pracujących przy sprzężeniu zwrotnym.
 Wyjście wzmacniacza, przy dodatkowym przesunięciu fazy,
 podane jako sprzężenie zwrotne może zmienić jego charakter
 i zsumować się z sygnałem wejściowym
@@ -315,9 +317,10 @@ możemy wyznaczyć wzmocnienie układu:
 \end{align}
 Zero transmitancji układu położone jest na
 częstotliwości określonej przez~(\ref{eqn:freq:zero}).
-Dla niskich częstotliwości mianownik
+Ponieważ~$s^2$ jest małe,
+to dla niskich częstotliwości mianownik
 transmitancji~(\ref{eqn:freq:split:tf})
-jest w przybliżeniu (ponieważ~$s^2$ jest małe) równy:
+jest w przybliżeniu równy:
 \begin{equation}
   1 + j \omega [(C_{gd7} + C_o) R_o +
                 (C_{gd7} + C_s) R_s +
@@ -349,19 +352,19 @@ z mianownika~(\ref{eqn:freq:split:tf}):
                        (C_{gd7} + C_s) R_s +
                         C_{gd7} g_{m2} R_o R_s]}\Big)
 \end{align}
-Jest to równanie w postaci:
+Otrzymujemy równanie w postaci:
 \begin{equation}
   (1 + j \cdot \frac{f}{f_1})(1 + j \cdot \frac{f}{f_2})
 \end{equation}
-Dzieląc licznik i mianownik przez~$s R_o R_s$, otrzymujemy:
+Dzieląc licznik i mianownik przez~$s R_o R_s$ otrzymujemy:
 \begin{equation}
   1 + j \cdot \frac{s(C_{gd7} C_o + C_{gd7} C_s + C_o C_s)}
     {1 / s R_o R_s + [(C_{gd7} + C_o) / R_s +
                       (C_{gd7} + C_s) / R_o + C_{gd7} g_{m2}]}
 \end{equation}
 W praktycznych realizacjach wzmacniaczy możemy założyć:~$g_m >> \frac{1}{r_o}$
-(jeżeli tak nie jest to \emph{wzmocnienie własne}
-tranzystora~$g_m r_o$ jest zbyt małe
+(jeżeli tak nie jest, to \emph{wzmocnienie własne}
+tranzystora~$g_m r_o$ jest zbyt małe,
 aby było możliwe zbudowanie na nim użytecznego wzmacniacza).
 Dlatego możemy zapisać:
 \begin{equation}
@@ -371,7 +374,7 @@ Dlatego możemy zapisać:
 
 Warto zauważyć, że jeżeli umieścimy dodatkową pojemność:~$C_c$
 równolegle z pojemnością tranzystora~$C_{gd7}$ tak,
-że efektywna pojemność wyniesie~$C_c + C_{gd7}$ to
+że efektywna pojemność wyniesie~$C_c + C_{gd7}$, to
 zgodnie z~(\ref{eqn:freq:split:denom:lowf})
 biegun na niższej częstotliwości~$f_1$
 przesunie się na jeszcze mniejszą częstotliwość.
@@ -385,8 +388,8 @@ Stąd nazwa rozdzielanie biegunów.
   \label{fig:freq:split:tf}
 \end{figure}
 
-Częstą praktyką jest dodawanie pojemności~$C_c$ na tyle dużej aby biegun~$f_1$
-był położony na znacznie niższej częstotliwości niż zero czy biegun~$f_2$.
+Częstą praktyką jest dodawanie pojemności~$C_c$ na tyle dużej, aby biegun~$f_1$
+był położony na znacznie niższej częstotliwości niż zero, czy biegun~$f_2$.
 Mówimy wtedy, że biegun związany z częstotliwością~$f_1$ jest
 \emph{biegunem dominującym}.
 W takim przypadku wzmocnienie możemy przybliżyć równaniem:
@@ -396,7 +399,7 @@ W takim przypadku wzmocnienie możemy przybliżyć równaniem:
   \frac{g_{m1} R_s g_{m2} R_o}{1 + j 2 \pi f \cdot g_{m2} R_s R_o C_c}
   \label{eqn:freq:split:gain}
 \end{equation}
-Jest to równanie w postaci:
+Otrzymujemy równanie w postaci:
 \begin{equation}
   A_V(f) = \frac{A_{DC}}{1 + j \frac{f}{f_{3dB}}},
 \end{equation}
@@ -409,12 +412,12 @@ co pozwala nam zapisać:
 \end{align}
 
 Dla częstotliwości znacznie większych niż częstotliwość~$3$ decybelowa,
-możemy przybliżyć transmitancje~\ref{eqn:freq:split:gain} poprzez:
+możemy przybliżyć transmitancję~\ref{eqn:freq:split:gain} poprzez:
 \begin{equation}
-  A_v \approx \frac{g_{m1}}{2 \pi f C_c},
+  A_v \approx \frac{g_{m1}}{2 \pi f C_c}.
 \end{equation}
-skąd możemy uzyskać zależność na częstotliwość
-przy której wzmocnieni jest równe~$1$:
+Możemy stąd uzyskać zależność na częstotliwość,
+przy której wzmocnienie jest równe~$1$:
 \begin{equation}
   f_{un} = \frac{g_m1}{2 \pi C_c}
   \label{eqn:freq:unity}
@@ -437,10 +440,10 @@ przy której wzmocnieni jest równe~$1$:
 \end{figure}
 
 Z~(\ref{eqn:freq:zero}) i~(\ref{eqn:freq:unity}) widać,
-że jeżeli transkonduktancje obu tranzystorów są zbliżone to
+że jeżeli transkonduktancje obu tranzystorów są zbliżone, to
 częstotliwość zera oraz częstotliwość wzmocnienia jednostkowego
 wypadają na takiej samej lub zbliżonej wartości.
-Jak zostało wspomniane w rozdziale~\ref{freq:zero}
+Jak zostało wspomniane w rozdziale~\ref{freq:zero},
 poprzez pojemność~$C_c$ może przechodzić sygnał z wejścia
 bezpośrednio na wyjście wzmacniacza.
 Jednocześnie zero w charakterystyce częstotliwościowej może spowodować,
@@ -451,13 +454,59 @@ jak na~\fig{fig:zero:amp}
 Dzięki takiemu zabiegowi nadal otrzymamy efekt rozdzielania biegunów,
 ale nie będzie \emph{drogi} z wejścia na wyjście wzmacniacza.
 Innym rozwiązaniem jest dodanie rezystora szeregowo z pojemnością sprzężenia
-zwrotnego $C_c$, aby stłumić sygnały wysokoczęstotliwościowe.
-Dodanie rezystora przesuwa zero na wyższą częstotliwość,
+zwrotnego $C_c$, który stłumi sygnały wysokoczęstotliwościowe.
+Dodanie rezystora przesuwa zero na wyższą częstotliwość
 zgodnie z zależnością:
 \begin{equation}
   f_z = \frac{1}{2 \pi C_c \frac{1}{g_m}} \xrightarrow{z rezystorem}
   f_z = \frac{1}{2 \pi C_c (\frac{1}{g_m} - R_z)}
 \end{equation}
+
+\chapter{Projekt wzmacniacza operacyjnego}
+\label{work}
+Na zajęciach należy zmodyfikować blok~\emph{opamp}
+z biblioteki \emph{LIB3}.
+Dla projektowanego bloku przygotowane zostało
+środowisko testowe~\emph{opamp\_sim}.
+Najważniejsze mierzone parametry zebrane
+zostały w~tabeli~\ref{tab:work:measure}.
+
+Przed rozpoczęciem projektowania wzmacniacza należy zamienić blok
+\emph{bias\_hs\_sim} obecny w teście \emph{opamp\_sim}
+na układ polaryzacji zaprojektowany na poprzednim laboratorium.
+Wystarczy zmienić nazwę biblioteki we właściwościach obiektu.
+
+Celem ćwiczenia jest zaprojektowanie wzmacniacza operacyjnego tak,
+aby jego wzmocnienie w otwartej pętli wynosiło co najmniej~$80~dB$.
+Należy zapewnić jego stabilność poprzez zapewnienie odpowiednio
+dużego marginesu fazy wynoszącego co najmniej~$55^\circ$.
+
+Całość należy zweryfikować poprzez analizę w narożnikach procesu
+oraz za pomocą analizy \emph{Monte Carlo},
+tak jak było to robione przy okazji ćwiczenia 2.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Mierzone parametry wzmacniacza operacyjnego}
+  \label{tab:work:measure}
+  \begin{tabular}{l p{0.7\textwidth}}
+    \hline \hline
+    Nazwa & Opis \\
+    \hline
+    $gain\_dB$ & Charakterystyka wzmocnienia \\
+    $phase$    & Przebieg fazy wzmacniacza \\
+    $gain\_dB\_DC$ & Wartość wzmocnienia dla niskich częstotliwości \\
+    $f\_un$ & Częstotliwość dla której wzmocnienie spada do 1 \\
+    $gainBandwidthProd$ & Iloczyn wzmocnienia i pasma wzmacniacza \\
+    $gainMargin$ & Margines wzmocnienia \\
+    $phaseMargin$ & Margines fazy \\
+    $bandwidth$ & Pasmo ($3~dB$) wzmacniacza \\
+    $slew\_rate$ & Szybkość narastania napięcia wyjściowego \\
+    $tset1\%$ & Czas po jakim napięcie wyjściowe ustawi się z dokładnością $1~\%$ \\
+    $tset0.1\%$ & Czas po jakim napięcie wyjściowe ustawi się z dokładnością $0,1~\%$ \\
+     \hline \hline
+  \end{tabular}
+\end{table}
 
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEabrv,bibliography}
