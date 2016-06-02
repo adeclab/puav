@@ -34,7 +34,7 @@ oraz na moc zużywaną przez układ.
 
 W analogowych układach scalonych,
 ze względu na łatwość dopasowania elementów,
-do polaryzacji tranzystorów wykorzystuję się źródła/lustra prądowe.
+do polaryzacji tranzystorów wykorzystuje się źródła/lustra prądowe.
 
 W niniejszym ćwiczeniu studenci zapoznają się
 z projektowaniem luster prądowych.
@@ -57,7 +57,7 @@ Podstawowe lustro prądowe,
 wykonane z tranzystorów typu~\emph{N},
 pokazano na~\fig{fig:basic}
 %Przyjmijmy, że oba tranzystory mają takie same wymiary.
-Z topologi układu wynika, że~$V_{GS1} = V_{DS1} = V_{GS2}$.
+Z topologii układu wynika, że~$V_{GS1} = V_{DS1} = V_{GS2}$.
 Pomijając wpływ modulacji długości kanału (parametr~$\lambda$),
 dzięki równości napięć bramka - źródło obu tranzystorów spodziewamy się,
 że oba tranzystory będą miały jednakowy prąd drenu.
@@ -80,7 +80,7 @@ W przybliżeniu wyjście lustra prądowego można traktować
 jak najprostsze źródło prądowe.
 Napięcie na wyjściu lustra prądowego oznaczono~$V_O$.
 
-Założenie, że prądy drenu zależą tylko od panięcia~$V_{GS}$
+Założenie, że prądy drenu zależą tylko od napięcia~$V_{GS}$
 pomaga zrozumieć działanie lustra prądowego,
 ale jest zbyt dużym uproszczeniem.
 Dokładniejszą analizę przeprowadzimy już z uwzględnieniem wpływu
@@ -108,6 +108,9 @@ dzięki temu stosunek prądów drenu tranzystorów ma postać:
   \label{eqn:basic:iratio}
 \end{equation}
 
+Dobrą praktyką jest aby długości kanałów tranzystorów
+lustra prądowego były równe.
+Dzięki temu późniejsze tworzenie topografii będzie łatwiejsze.
 W celu narysowania poprawnej topografii lustra prądowego
 długości kanałów tranzystorów muszą być takie same.
 Pomijając na razie wpływ modulacji długości kanału,
@@ -116,7 +119,7 @@ możemy uprościć~\eqn{eqn:basic:iratio} do postaci:
   \frac{I_O}{I_{REF}} = \frac{W_2}{W_1}
   \label{eqn:basic:wratio}
 \end{equation}
-Poprzez proste skalowanie szerokości kanału,
+Poprzez proste skalowanie szerokości kanału
 możemy zmieniać prąd wyjściowy lustra.
 Przykładowe zastosowanie pokazano na~\fig{fig:basic:scale}
 
@@ -132,15 +135,15 @@ Przykładowe zastosowanie pokazano na~\fig{fig:basic:scale}
 Podstawowym problemem przy projektowaniu lustra prądowego
 jest zapewnienie równości prądów referencyjnego~$I_{REF}$
 oraz wyjściowego~$I_O$.
-W następnych sekcjach zbadamy jak różnice parametrów
-wpływają na różnice prądów.
+W następnych sekcjach zbadamy,
+jak różnice parametrów wpływają na różnice prądów.
 
 \subsubsection{Różnica napięć progowych}
 \label{mirror:matching:vth}
 W punkcie~\ref{mirror:basic} powiedzieliśmy,
-że w pierwszym przybliżeniu, równość prądów $I_{REF}$ oraz $I_O$
+że w pierwszym przybliżeniu równość prądów $I_{REF}$ oraz $I_O$
 wynika z równości napięć $V_{GS}$ lustra prądowego.
-Do dobrego dopasowania prądów, niezbędne jest dopasowanie
+Do dobrego dopasowania prądów niezbędne jest dopasowanie
 napięć progowych obu tranzystorów lustra prądowego.
 Chcąc zbadać wpływ różnicy napięć progowych przyjmujemy, źe:
 \begin{eqnarray}
@@ -158,7 +161,7 @@ wykorzystaniem~\eqn{eqn:matching:vth}, otrzymujemy:
   \label{eqn:matching:vth:ratio}
 \end{equation}
 Podnosząc wyrażenia do kwadratu, a następnie zaokrąglając poprzez pominięcie
-wyrażeń w wyższych potęgach, stosunek prądu wynosi w przybliżeniu:
+wyrażeń w wyższych potęgach, otrzymujemy w przybliżeniu:
 \begin{equation}
   \frac{I_O}{I_{REF}} \approx 1 \frac{2 \Delta V_{TH}}{V_{GS} - V_{TH}} =
     1 - \frac{2 \Delta V_{TH}}{V_{DSsat}}
@@ -175,7 +178,7 @@ wyższym napięciu~$V_{GS}$ pamiętając, że kosztem takiego zabiegu będzie
 mniejszy zakres napięcia wyjściowego tranzystora~$V_{DS}$,
 dla którego tranzystor pozostaje w nasyceniu.
 
-\subsubsection{Różnica transkonduktancji}
+\subsubsection{Różnica parametru $K_n$}
 \label{baisc:matching:kp}
 Podobna analiza może być przeprowadzona dla różnicy parametru~$K_n$ tranzystora.
 Jeżeli przyjmiemy, że:
@@ -197,7 +200,7 @@ Mogłoby się wydawać, że wraz ze skalowaniem procesu różnice w~$K_n$
 tranzystorów spowodowane różnicami w tlenku bramkowym oraz
 różnicami ruchliwości powinny być mniejsze.
 Jednak mniejsze wymiary tranzystorów powodują również,
-że jeżeli wystąpi defekt to jest on uśredniany
+że jeżeli wystąpi defekt, to jest on uśredniany
 po mniejszej powierzchni przyrządu.
 
 \subsubsection{Różnica napięć $V_{DS}$}
@@ -210,12 +213,12 @@ po mniejszej powierzchni przyrządu.
   \label{fig:matching:vds}
 \end{figure}
 
-Efektem który bardzo silnie wpływa na dopasowanie prądów lustra jest
-różnica napięcia dren - źródło tranzystorów.
-Rys~\ref{fig:matching:vds} przedstawia wartości prądów~$I_{REF}$
+Efektem, który bardzo silnie wpływa na dopasowanie prądów lustra,
+jest różnica napięcia dren - źródło tranzystorów.
+Rys~\ref{fig:matching:vds}. przedstawia wartości prądów~$I_{REF}$
 oraz~$I_O$ w zależności od napięcia wyjściowego~$V_O$
-lustra ze schematu na~\fig{fig:basic:equiv}.
-Jak można zauważyć prądy są jednakowe tylko dla jednej,
+lustra ze schematu na~\fig{fig:basic:equiv}
+Jak można zauważyć, prądy są jednakowe tylko dla jednej,
 konkretnej wartości napięcia~$V_O$,
 równej napięciu~$V_{DS}$ tranzystora referencyjnego~$M_1$.
 Biorąc pod uwagę różnice napięć~$V_{DS}$ tranzystorów
@@ -236,7 +239,7 @@ i $V_O = V_{DS} + 0.6~V = 792~mV$ otrzymujemy:
   \label{eqn:matching:result}
 \end{equation}
 co oznacza \emph{niedopasowanie prądów lustra aż o 20~\%}.
-Jak widać równość napięć dren - źródło tranzystorów tworzących zwierciadło
+Jak widać, równość napięć dren - źródło tranzystorów tworzących zwierciadło
 prądowe ma krytyczne znaczenie dla równości prądów,
 dlatego w kolejnych rozdziałach przedstawimy sposoby
 na ograniczenie wpływu różnicy napięć~$V_{DS}$.
@@ -262,7 +265,7 @@ Napięcie na bramce tego tranzystora jest ustalane
 przez tranzystor~$M_1$ w połączeniu diodowym.
 Napięcie~$V_{DS}$ tranzystora~$M_2$ jest ustalane przez tranzystor~$M_4$,
 jest ono równe napięciu na bramce tranzystora~$M_4$,
-pomniejszone o jego napięcie~$V_{GS}$.
+pomniejszonemu o jego napięcie~$V_{GS}$.
 Napięcia w poszczególnych węzłach układu
 zaznaczono na~\fig{fig:cascode:simple:node}
 
@@ -286,13 +289,13 @@ zaznaczono na~\fig{fig:cascode:simple:node}
 Problemem kaskody opisanej w ostatnim punkcie jest wysoka wartość minimalnego
 napięcia wyjściowego takiego lustra prądowego,
 równa: $2 \times V_{DSsat} + V_{TH}$.
-Wyjściem lustra jest szeregowe połączenie 2 tranzystorów.
+W obwodzie wyjściowym lustra mamy 2 szeregowo połączone tranzystory.
 Minimalnym napięciem jakie powinno być potrzebne
 aby tranzystory pozostały w nasyceniu jest: $2 \times V_{DSsat}$.
 Rys~\ref{fig:cascode:wideswing:idea} przedstawia
 wymagane napięcia dla kaskody o obniżonym napięciu wyjściowym.
 
-\subsubsection{Generowanie napięcia polaryzacji tranzystora kaskodującego}
+\subsubsection{Generowanie napięcia polaryzacji tranzystora $M_4$}
 \label{cascode:wideswing:mws}
 
 \begin{figure}[!htbp]
@@ -343,7 +346,12 @@ może zdarzyć się, że napięcie na drenie~$M_2$ obniży się i tranzystor
 Dlatego należy zwiększyć trochę wartość napięcia na bramce~$M_4$,
 poprzez uczynienie tranzystora~$M_{WS}$ dłuższym.
 Typowo jego długość dobiera się eksperymentalnie,
-tak aby $M_2$ pozostał w nasyceniu, z pewnym zapasem.
+tak aby $M_2$ pozostał w nasyceniu z pewnym zapasem.
+
+Dodatkowy prąd referencyjny~$I_{REF}$ dla tranzystora~$M_{WS}$
+jest taki sam jak prąd referencyjny tranzystora~$M_1$.
+Zazwyczaj uzyskuje się go poprzez powielenie prądu referencyjnego
+prostym lustrem prądowym.
 
 \begin{figure}[!htbp]
   \centering
@@ -398,10 +406,10 @@ z biblioteki \emph{LIB2}.
 Dla projektowanego bloku przygotowane zostało
 środowisko testowe~\emph{bias\_sim}.
 Najważniejsze mierzone parametry zebrane
-zostały w~\tab{tab:work:measure}.
+zostały w~tabeli~\ref{tab:work:measure}.
 
 Celem ćwiczenia jest takie zaprojektowanie układu polaryzacji,
-aby możliwe było proste zrobienie nowych źródeł prądowych,
+aby możliwe było proste zrobienie nowych źródeł prądowych
 poprzez wykorzystanie napięć~$bias~<~1~:~4~>$.
 Prąd wyjściowy źródła~$i_bias$ powinien mieć wartość
 równą prądowi referencyjnemu (w tym przypadku $10~\mu{}A$),
@@ -412,8 +420,8 @@ Następnie należy policzyć teoretyczną wartość rezystancji wyjściowej
 z wynikami otrzymanymi z symulacji elektrycznej.
 W odróżnieniu od pierwszego ćwiczenia,
 należy przeprowadzić symulacje w narożnikach procesu
-\eng{process corners} i podczas rozrzutów produkcyjnych z
-wykorzystaniem analizy \emph{Monte Carlo}.
+\eng{process corners} oraz z wykorzystaniem analizy \emph{Monte Carlo},
+która symuluje rozrzuty produkcyjne.
 
 \begin{table}[htbp]
   \centering
