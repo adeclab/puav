@@ -68,8 +68,9 @@ W takim przypadku można zrezygnować z bufora wyjściowego.
 Tego typu wzmacniacz często nazywa się wzmacniaczem
 transkonduktancyjnym~\emph{OTA} \eng{Operational Transconductance Amplifier}.
 Rezygnując z bufora wyjściowego, należy zwrócić uwagę na
-ewentualne problemy ze \emph{slew rate}, w szczególności gdy wartość
-pojemności obciążająca wzmacniacz jest duża.
+ewentualne problemy z maksymalną szybkością zmian napięcia
+na wyjściu \eng{slew rate}, w szczególności gdy
+wartość pojemności obciążająca wzmacniacz jest duża.
 Ze względu na powszechność, z jaką używa się wzmacniaczy~\emph{OTA},
 w układach scalonych często nazywa się je w skrócie wzmacniaczami operacyjnymi.
 
@@ -103,6 +104,8 @@ Węzły \emph{bias<3>} i~\emph{bias<4>} pochodzą z bloku
 projektowanego na poprzednich zajęciach.
 Pary tranzystorów~$M_6$ i~$M_8$ tworzą źródła prądowe,
 które wymuszają przepływ prądu w poszczególnych gałęziach układu.
+Podczas pracy w ustalonym punkcie pracy zakładamy równość
+napięć wejściowych \emph{In+} oraz \emph{In-}.
 Prądy płynące przez tranzystory $M_1$~i~$M_2$ są takie same,
 równe połowie prądu lustra złożonego z tranzystorów~$M_6$.
 Bramki tranzystorów~$M_3$ i~$M_4$ są zwarte,
@@ -110,16 +113,16 @@ więc ich napięcia~$V_{GS}$ są takie same.
 Ponieważ prąd płynący przez oba tranzystory jest taki sam,
 napięcia~$V_{DS}$ obu tranzystorów muszą być takie same.
 Dlatego napięcie~$V_{GS}$ tranzystora~$M7$,
-tworzącego wzmacniacz drugiego stopnia,
+w drugim stopniu wzmacniacza,
 jest równe napięciu~$V_{GS}$ tranzystorów~$M3$ i~$M4$.
 Takie połączenie zapewni dobrze ustalony punkt pracy wzmacniacza.
-Dzięki temu tranzystory będą posiadały znane parametry i możliwe
-będzie przewidzenie osiągów projektowanego wzmacniacza operacyjnego.
+Dzięki temu będzie można określić wartość parametrów małosygnałowych
+tranzystorów i parametróœ całego wzmacniacza.
 
 \subsection{Wejściowe napięcie wspólne}
 \label{schematic:cm}
 Gdy wzmacniacz operacyjny pracuje przy
-zamkniętej pętli sprzężenia zwrotnego,
+zamkniętej pętli ujemnego sprzężenia zwrotnego,
 napięcia na wejściach pary różnicowej są utrzymywane na tych samych
 (lub prawie tych samych) poziomach.
 Wartość średnia z napięć na obu wejściach wzmacniacza
@@ -146,7 +149,7 @@ dlatego możemy zapisać:
 
 \subsection{Wejściowe napięcie różnicowe}
 \label{schematic:diff}
-Ponieważ prąd drenu tranzystora w zakresie nasycenia opisuję się równaniem:
+Ponieważ prąd drenu tranzystora w zakresie nasycenia opisuje się równaniem:
 \begin{equation}
   i_D = \frac{\beta_n}{2}(v_{GS} - V_{THN}),
 \end{equation}
@@ -156,7 +159,7 @@ wejściowe napięcie różnicowe można przedstawić w postaci:
   \label{eqn:schematic:diff:di}
 \end{equation}
 Maksymalne wejściowe napięcie różnicowe otrzymamy podstawiając prąd źródła
-prądowego~$I_{SS}$ płynącego w \emph{ogonie} pary różnicowej
+prądowego~$I_{SS}$ zasilającego parę różnicową
 pod prąd~$i_{D1}$ do~(\ref{eqn:schematic:diff:di}) oraz zerując prąd~$i_{D2}$.
 Otrzymamy wtedy:
 \begin{equation}
@@ -194,8 +197,8 @@ Wartości elementów schematu zastępczego wynoszą:
   C_o &= C_L + C_{gd8} \approx C_L \nonumber
 \end{align}
 
-Korzystając z twierdzenia Millera można przenieść
-pojemność~$C_{gd7}$ na węzeł~$1$ i~$2$.
+Korzystając z twierdzenia Millera można rozdzielić
+pojemność~$C_{gd7}$ na dwie dołączone do węzełów~$1$ i~$2$.
 Wartości nowych pojemności wynoszą:
 \begin{align}
   C_{MI} &= C_{gd7}(1 + |A_2|)), \\
@@ -217,7 +220,7 @@ Częstotliwości graniczne związane z tymi stałymi czasowymi będą wynosić:
 \begin{figure}[!htbp]
   \centering
   \includegraphics[width=0.9\textwidth]{miller}
-  \caption{Model małosygnałowy po zastosowaniu efektu Millera.}
+  \caption{Model małosygnałowy po zastosowaniu twierdzenia Millera.}
   \label{fig:miller}
 \end{figure}
 
@@ -233,7 +236,7 @@ Charakterystyka częstotliwościowa układu z~\fig{fig:miller} ma postać:
 Niestety model zaproponowany w rozdziale~\ref{freq}
 nie jest całkowicie poprawny.
 Stosując twierdzenie Millera do wyznaczenia częstotliwości granicznych
-pomijane jest zero w charakterystyce częstotliwościowej.
+pomijamy zero w charakterystyce częstotliwościowej.
 Obserwując~\fig{fig:smallsignal} można zauważyć,
 że w przypadku granicznym (dla bardzo wysokich częstotliwości)
 pojemność~$C_{gd7}$ zwiera wejście z wyjściem drugiego stopnia wzmacniacza.
@@ -271,11 +274,11 @@ ale inny wpływ na odpowiedź fazową.
 Zero w prawej płaszczyźnie wpływa na odpowiedź fazową
 tak samo jak biegun w lewej płaszczyźnie.
 Ta właściwość rodzi ważne konsekwencje przy projektowaniu wzmacniaczy,
-pracujących przy sprzężeniu zwrotnym.
-Wyjście wzmacniacza, przy dodatkowym przesunięciu fazy,
-podane jako sprzężenie zwrotne może zmienić jego charakter
-i zsumować się z sygnałem wejściowym
-(dodanie sprzężenie zwrotne), powodując niestabilność wzmacniacza.
+pracujących ze sprzężeniem zwrotnym.
+Dodatkowe przesunięcie fazy może spowodować, że sygnał z wyjścia
+będzie podany na wejście w fazie zgodnej z sygnałem wejściowym,
+powstanie zatem zamiast ujemnego - dodatnie sprzężenie zwrotne
+powodując niestabilność wzmacniacza.
 
 \subsection{Rozdzielanie biegunów}
 \label{freq:split}
@@ -285,8 +288,8 @@ wyjściowego bieguna jest obarczone błędem.
 Wzmocnienie~$A_2$ maleje powyżej częstotliwości~$f_1$,
 więc pojemność Millerowska~$C_{gd7}$ będzie mniejsza
 niż w równaniu~\ref{eqn:freq:pole:high},
-co spowoduję, że biegun wyjściowy będzie znajdował się
-na znacznie wyższej częstotliwości niż~$f_2$.
+co spowoduję, że częstotliwość bieguna wyjściowego
+będzie znacznie wyższa niż~$f_2$.
 
 W celu opisania tego efektu posłużymy się
 schematem z~\fig{fig:smallsignal}
@@ -315,8 +318,8 @@ możemy wyznaczyć wzmocnienie układu:
     s[R_o (C_{gd7} + C_o) + R_s (C_{gd7} + C_s) + g_{m2} R_o R_s C_{gd7}] + 1}.
   \label{eqn:freq:split:tf}
 \end{align}
-Zero transmitancji układu położone jest na
-częstotliwości określonej przez~(\ref{eqn:freq:zero}).
+Częstotliwość zera transmitancji układu
+określona jest przez~(\ref{eqn:freq:zero}).
 Ponieważ~$s^2$ jest małe,
 to dla niskich częstotliwości mianownik
 transmitancji~(\ref{eqn:freq:split:tf})
@@ -327,7 +330,7 @@ jest w przybliżeniu równy:
                 C_{gd7} g_{m2} R_o R_s],
   \label{eqn:freq:split:denom:lowf}
 \end{equation}
-więc biegun na niskich częstotliwościach jest położony na częstotliwości:
+więc częstotliwość odpowiedniego bieguna wynosi:
 \begin{equation}
   f_1 \approx \frac{1}{2 \pi [(C_{gd7} + C_o) R_o +
                               (C_s + C_{gd7} (1 + |A_v|)) R_s]},
@@ -376,9 +379,8 @@ Warto zauważyć, że jeżeli umieścimy dodatkową pojemność:~$C_c$
 równolegle z pojemnością tranzystora~$C_{gd7}$ tak,
 że efektywna pojemność wyniesie~$C_c + C_{gd7}$, to
 zgodnie z~(\ref{eqn:freq:split:denom:lowf})
-biegun na niższej częstotliwości~$f_1$
-przesunie się na jeszcze mniejszą częstotliwość.
-Natomiast biegun~$f_2$ znajdzie się na jeszcze wyższej częstotliwości.
+częstotliwość bieguna~$f_1$ obniży się,
+natomiast częstotliwość~$f_2$ drugiego bieguna podwyższy się.
 Stąd nazwa rozdzielanie biegunów.
 
 \begin{figure}[!htbp]
@@ -388,8 +390,9 @@ Stąd nazwa rozdzielanie biegunów.
   \label{fig:freq:split:tf}
 \end{figure}
 
-Częstą praktyką jest dodawanie pojemności~$C_c$ na tyle dużej, aby biegun~$f_1$
-był położony na znacznie niższej częstotliwości niż zero, czy biegun~$f_2$.
+Częstą praktyką jest dodawanie pojemności~$C_c$ na tyle dużej,
+aby częstotliwość bieguna~$f_1$ była znacznie niższa,
+niż częstotliwość bieguna~$f_2$.
 Mówimy wtedy, że biegun związany z częstotliwością~$f_1$ jest
 \emph{biegunem dominującym}.
 W takim przypadku wzmocnienie możemy przybliżyć równaniem:
@@ -411,7 +414,8 @@ co pozwala nam zapisać:
   \label{eqn:freq:split:bw}
 \end{align}
 
-Dla częstotliwości znacznie większych niż częstotliwość~$3$ decybelowa,
+Dla częstotliwości znacznie większych niż częstotliwość,
+przy której wzmocnienie spada o~$3$~decybele,
 możemy przybliżyć transmitancję~\ref{eqn:freq:split:gain} poprzez:
 \begin{equation}
   A_v \approx \frac{g_{m1}}{2 \pi f C_c}.
@@ -428,11 +432,11 @@ przy której wzmocnienie jest równe~$1$:
 
 \begin{figure}[!htbp]
   \centering
-  \subfloat[Usuwanie zera wzmacniaczem.]{
+  \subfloat[Usuwanie zera wzmacniaczem.]{%
     \includegraphics[width=0.4\textwidth]{zeros_amp}
     \label{fig:zero:amp}}
   \qquad
-  \subfloat[Usuwanie zera rezystorem.]{
+  \subfloat[Usuwanie zera rezystorem.]{%
     \includegraphics[width=0.4\textwidth]{zeros_res}
     \label{fig:zero:res}}
   \caption{Sposoby usuwania zera.}
@@ -442,7 +446,7 @@ przy której wzmocnienie jest równe~$1$:
 Z~(\ref{eqn:freq:zero}) i~(\ref{eqn:freq:unity}) widać,
 że jeżeli transkonduktancje obu tranzystorów są zbliżone, to
 częstotliwość zera oraz częstotliwość wzmocnienia jednostkowego
-wypadają na takiej samej lub zbliżonej wartości.
+mają zbliżone wartości.
 Jak zostało wspomniane w rozdziale~\ref{freq:zero},
 poprzez pojemność~$C_c$ może przechodzić sygnał z wejścia
 bezpośrednio na wyjście wzmacniacza.
@@ -455,8 +459,7 @@ Dzięki takiemu zabiegowi nadal otrzymamy efekt rozdzielania biegunów,
 ale nie będzie \emph{drogi} z wejścia na wyjście wzmacniacza.
 Innym rozwiązaniem jest dodanie rezystora szeregowo z pojemnością sprzężenia
 zwrotnego $C_c$, który stłumi sygnały wysokoczęstotliwościowe.
-Dodanie rezystora przesuwa zero na wyższą częstotliwość
-zgodnie z zależnością:
+Dodanie rezystora podwyższa częstotliwość zera zgodnie z zależnością:
 \begin{equation}
   f_z = \frac{1}{2 \pi C_c \frac{1}{g_m}} \xrightarrow{z rezystorem}
   f_z = \frac{1}{2 \pi C_c (\frac{1}{g_m} - R_z)}
